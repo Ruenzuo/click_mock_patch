@@ -16,5 +16,6 @@ class TestApp(unittest.TestCase):
         self.assertRaises(RuntimeError, self.runner.invoke, entry_point, ['--opt1', 'Hi', '--opt2', 'You', 'cmd'], None, None, False)
 
     def test_app_should_not_raise(self):
-        with patch('helpers.helper.do_something_useful', return_value = None):
-            self.runner.invoke(entry_point, ['--opt1', 'Hi', '--opt2', 'You', 'cmd'], None, None, False)
+        with patch('commands.cmd.do_something_useful', return_value = None):
+            result = self.runner.invoke(entry_point, ['--opt1', 'Hi', '--opt2', 'You', 'cmd'], None, None, False)
+            self.assertIn("Options are: Hi and You", result.output)
